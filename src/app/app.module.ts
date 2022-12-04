@@ -7,11 +7,11 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { PostService } from './post/post.service';
+import { DBService } from './services/db.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ScrollingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, PostService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, DBService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
