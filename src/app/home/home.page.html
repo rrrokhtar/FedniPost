@@ -7,5 +7,26 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>Notifications {{notifications.length}}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <div>
+          <ion-button expand="block" *ngIf="notifications.length>0" (click)="setNotificationsToRead()">Mark all as read</ion-button>
+        </div>
+        <ion-list *ngFor="let notification of notifications; trackBy: trackByFn">
+          <ion-item>
+            <ion-label>
+              <p>{{notification.message}}</p>
+              <p>{{notification.created_at}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
   <app-post></app-post>
 </ion-content>

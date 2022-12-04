@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PostService } from './post.service';
+import { DBService } from '../services/db.service';
 import { Post } from "../post/post.interface";
 import { onValue } from "firebase/database";
 
@@ -13,7 +13,7 @@ export class PostComponent {
 
   posts: Post[] = [];
   postsRef: any;
-  constructor(private service: PostService) {
+  constructor(private service: DBService) {
     this.postsRef = this.service.getPostsData();
     onValue(this.postsRef, (snapshot) => {
       snapshot.forEach((childSnapshot) => {
@@ -43,7 +43,7 @@ export class PostComponent {
     }
     this.post.id = `${this.posts.length + 1}`;
     this.posts.push(this.post);
-    this.service.writePostData(this.post);
+    this.service.writePostData(this.post, "added");
     this.cancel();
   }
   cancel() {
@@ -59,11 +59,11 @@ export class PostComponent {
   }
   like(postId: string) {
     this.posts.filter(post => post.id === postId)[0].likes++;
-    this.service.writePostData(this.posts.filter(post => post.id === postId)[0]);
+    this.service.writePostData(this.posts.filter(post => post.id === postId)[0], "liked");
   }
   dislike(postId: string) {
     this.posts.filter(post => post.id === postId)[0].likes--;
-    this.service.writePostData(this.posts.filter(post => post.id === postId)[0]);
+    this.service.writePostData(this.posts.filter(post => post.id === postId)[0], "disliked");
   }
   comment(postId: string) {
     let post = this.posts.filter(post => post.id === postId)[0];
@@ -79,7 +79,7 @@ export class PostComponent {
       created_at: new Date().toLocaleString(),
     });
     post.temperory_comment = '';
-    this.service.writePostData(post);
+    this.service.writePostData(post, "commented");
   }
   trackByFn(index: any, item: any) {
     return item.id;
