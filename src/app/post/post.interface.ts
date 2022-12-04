@@ -1,15 +1,16 @@
 
 export interface Post {
-    id: number;
+    id: string;
     title: string;
     content: string;
     likes: number;
-    created_at: Date;
+    created_at: string;
     comments: Comment[];
+    temperory_comment: string;
 }
 
 export interface Comment {
-    id: number;
+    id: string;
     content: string;
-    created_at: Date;
+    created_at: string;
 }

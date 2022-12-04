@@ -24,47 +24,60 @@ export class HomePage {
         }
       });
     });
-   }
-  post :Post= {
-    id: 0,
+  }
+  post: Post = {
+    id: '',
     title: '',
     content: '',
     likes: 0,
-    created_at: new Date(),
-    comments: []
+    created_at: new Date().toLocaleString(),
+    comments: [],
+    temperory_comment: '',
   };
-  
+
   save() {
-    this.post.id = this.posts.length + 1;
+    if (this.post.title === '' || this.post.content === '') {
+      return;
+    }
+    this.post.id = `${this.posts.length + 1}`;
     this.posts.push(this.post);
     this.service.writePostData(this.post);
     this.cancel();
   }
   cancel() {
     this.post = {
-      id: 0,
+      id: '',
       title: '',
       content: '',
       likes: 0,
-      created_at: new Date(),
-      comments: []
+      created_at: new Date().toLocaleString(),
+      comments: [],
+      temperory_comment: '',
     };
   }
-  like(postId: number) {
+  like(postId: string) {
     this.posts.filter(post => post.id === postId)[0].likes++;
     this.service.writePostData(this.posts.filter(post => post.id === postId)[0]);
   }
-  dislike(postId: number) {
+  dislike(postId: string) {
     this.posts.filter(post => post.id === postId)[0].likes--;
     this.service.writePostData(this.posts.filter(post => post.id === postId)[0]);
   }
-  comment(postId: number) {
-    this.posts.filter(post => post.id === postId)[0].comments.push({
-      id: this.posts.filter(post => post.id === postId)[0].comments.length + 1,
-      content: "Comment",
-      created_at: new Date()
+  comment(postId: string) {
+    let post = this.posts.filter(post => post.id === postId)[0];
+    if (post.temperory_comment === '') {
+      return;
+    }
+    if (post.comments === undefined) {
+      post.comments = [];
+    }
+    post.comments.push({
+      id: `${post.id}-${post.comments.length + 1}`,
+      content: post.temperory_comment,
+      created_at: new Date().toLocaleString(),
     });
-    this.service.writePostData(this.posts.filter(post => post.id === postId)[0]);
+    post.temperory_comment = '';
+    this.service.writePostData(post);
   }
   trackByFn(index: any, item: any) {
     return item.id;
