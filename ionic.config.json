@@ -1,0 +1,7 @@
+{
+  "name": "FedniPost",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      FedniPost
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <div id="content">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Add new post</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-item>
+            <ion-label position="floating">Title</ion-label>
+            <ion-input type="text" [(ngModel)]="post.title"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Content</ion-label>
+            <ion-textarea [(ngModel)]="post.content"></ion-textarea>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      <ion-button expand="" (click)="save()" color="success">Save</ion-button>
+      <ion-button expand="" (click)="cancel()" color="light">Cancel</ion-button>
+    </div>
+    <div id="posts-list">
+      <ion-list *ngFor="let post of posts; trackBy: trackByFn">
+        <ion-card fill="outlined">
+          <ion-card-header>
+            <ion-card-title>{{post.title}}</ion-card-title>
+            <ion-card-subtitle>Likes {{post.likes}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            {{post.content}}
+          </ion-card-content>
+
+          <ion-button fill="solid" (click)="like(post.id)" color="danger">
+            <ion-icon name="heart" fill="solid"></ion-icon>
+          </ion-button>
+          <ion-button fill="solid" (click)="dislike(post.id)" color="medium">
+            <ion-icon name="heart-dislike" fill="solid"></ion-icon>
+          </ion-button>
+        </ion-card>
+      </ion-list>
+    </div>
+
+
+  </div>
+</ion-content>
