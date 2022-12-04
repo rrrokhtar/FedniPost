@@ -1,0 +1,75 @@
+<div id="content">
+  <ion-card color="light">
+    <ion-card-header>
+      <ion-card-title>Add new post</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Title</ion-label>
+        <ion-input color="dark" fill="outlined" type="text" [(ngModel)]="post.title"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Content</ion-label>
+        <ion-textarea [(ngModel)]="post.content"></ion-textarea>
+      </ion-item>
+    </ion-card-content>
+    <ion-button expand="" (click)="save()" color="success">Save</ion-button>
+    <ion-button expand="" (click)="cancel()" color="light">Cancel</ion-button>
+  </ion-card>
+  <div id="posts-list">
+    <ion-list *ngFor="let post of posts; trackBy: trackByFn">
+      <ion-card fill="outlined">
+        <ion-card-header>
+          <ion-card-title>{{post.title}}</ion-card-title>
+          <ion-card-subtitle>
+            {{post.created_at | date:'short'}}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <h5>
+            {{post.content}}
+          </h5>
+          <div id="likes-container">
+            <span>
+              <ion-icon [name]="post.likes > 0 ? 'heart' : 'heart-dislike'" size="small"
+                [color]="post.likes > 0 ? 'danger' : 'dark'"></ion-icon>
+              {{post.likes}}
+            </span>
+            <span>
+              <ion-button fill="solid" (click)="like(post.id)" color="danger" size="small">
+                <ion-icon name="heart" type="button" fill="solid" (click)="like(post.id)"></ion-icon>
+              </ion-button>
+              <ion-button fill="solid" (click)="dislike(post.id)" color="medium" size="small">
+                <ion-icon name="heart-dislike" fill="solid"></ion-icon>
+              </ion-button>
+            </span>
+          </div>
+        </ion-card-content>
+        <ion-accordion-group>
+          <ion-accordion value="first">
+            <ion-item slot="header" color="light">
+              <ion-label>Comments</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <div style="display: flex">
+                <ion-input placeholder="Add comment" [(ngModel)]="post.temperory_comment" color="dark" fill="outline">
+                </ion-input>
+                <ion-button (click)="comment(post.id)" color="success">Add</ion-button>
+              </div>
+              <ion-list *ngFor="let comment of post.comments; trackBy: trackByFn">
+                <ion-item>
+                  <ion-label>
+                    <p>{{comment.content}}</p>
+                    <p>{{comment.created_at}}</p>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </ion-card>
+    </ion-list>
+  </div>
+</div>

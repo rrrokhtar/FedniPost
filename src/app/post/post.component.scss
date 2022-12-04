@@ -1,0 +1,34 @@
+#posts-list {
+    max-width: 90%;
+    justify-self: center;
+    margin: 0 auto;
+}
+
+#likes-container {
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+span>ion-icon {
+    font-size: 30px;
+}
+
+#likes-container ion-icon:hover {
+    cursor: pointer;
+}
+
+#likes-container ion-icon.liked {
+    color: #ff0000;
+}
+
+#likes-container ion-icon.unliked {
+    color: #000000;
+}
+
+#likes-container>span {
+    justify-self: center;
+    display: flex;
+}
